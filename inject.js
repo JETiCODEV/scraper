@@ -75,6 +75,22 @@
             : selector;
     };
 
+    // Create a container for the highlights
+    let highlightContainer = document.getElementById('highlight-container');            
+    if (!highlightContainer) {
+        highlightContainer = document.createElement('div');
+        highlightContainer.id = 'highlight-container';
+        highlightContainer.style.position = 'absolute';
+        highlightContainer.style.top = '0';
+        highlightContainer.style.left = '0';
+        highlightContainer.style.width = '100%';
+        highlightContainer.style.height = '100%';
+        highlightContainer.style.pointerEvents = 'none'; // Ensure no interference with interactions
+        highlightContainer.style.zIndex = '2147483647'; // Maximum z-index
+        document.body.insertBefore(highlightContainer, document.body.firstChild);
+        window.highlightcontainer = highlightContainer;
+    }
+
     const getShadowDomPath = (element) => {
         const shadowPath = [];
         const seenHosts = new Set();
@@ -116,6 +132,7 @@
     const processNode = (node, index) => {
         node.querySelectorAll(selectors.join(',')).forEach(el => {
             if (isPartiallyVisible(el)) {
+                const rect = el.getBoundingClientRect();
                 const element = {
                     id: index,
                     tag: el.tagName.toLowerCase(),
@@ -129,7 +146,40 @@
                     selector: generateCssSelector(el, true).trim()
                 };
 
+                 // Add CSS bounding box
+                 const highlight = document.createElement('div');
+                 highlight.style.position = 'absolute';
+                 highlight.style.border = '2px solid blue';
+                 highlight.style.top = `${rect.top + window.scrollY}px`;
+                 highlight.style.left = `${rect.left + window.scrollX}px`;
+                 highlight.style.width = `${rect.width}px`;
+                 highlight.style.height = `${rect.height}px`;
+                 highlight.style.backgroundColor = 'rgba(0, 0, 255, 0.2)';
+                 highlight.style.boxShadow = '0 0 10px rgba(0, 0, 255, 0.5)';
+                 highlightContainer.appendChild(highlight);
+
+                 // Add index label above the bounding box
+                 const label = document.createElement('div');
+                 label.innerText = `${index}`;
+                 label.style.position = 'absolute';
+                 label.style.color = 'white';
+                 label.style.backgroundColor = 'blue';
+                 label.style.padding = '2px 4px';
+                 label.style.borderRadius = '3px';
+                 label.style.fontSize = '12px';
+                 label.style.top = `${rect.top + window.scrollY - 20}px`; // Position slightly above the bounding box
+                 label.style.left = `${rect.left + window.scrollX}px`;
+                 label.style.zIndex = '2147483648'; // Ensure label appears above bounding box
+                 highlightContainer.appendChild(label);
+
                 Object.keys(element).forEach(key => {
+                    if (element[key] === null) {
+                        delete element[key];
+                    }
+                });
+
+                 // Remove keys with null values
+                 Object.keys(element).forEach(key => {
                     if (element[key] === null) {
                         delete element[key];
                     }
