@@ -20,6 +20,8 @@ Build up planning + intial step
 Content extraction
 ![Content Extraction](./content/Screenshot%202024-12-05%20at%2015.51.16.png)
 
+![](./content//Screen%20Recording%202024-12-05%20at%2016.01.35.gif)
+
 ### Interaction Process
 
 For interactions, two agents are involved, combining the capabilities of `gemini-1.5-flash` and `groq/llama-3.2-90b-vision-preview`:
