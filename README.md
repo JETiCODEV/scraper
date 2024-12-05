@@ -10,7 +10,15 @@ The current setting is to use 2 different models:
 ## 🧪 How It Works
 
 You start by defining the URL you want to extract data from and providing a `user_task` along with an optional `plan_guide`. Based on these inputs, a plan is generated to extract the necessary data. This planning is orchestrated by the **planning agent**, which utilizes the `gemini-1.5-flash` LLM to create a step-by-step task list tailored to achieve the specified goal. The agents then autonomously navigate the website, interact with elements, and extract the required information, converting it into Markdown format without the need for manual intervention or detailed code adjustments.
+
 It is also capable of doing multiple interactions, for example accepting cookie consent, searching, ...
+
+## 🖼️ Some in program screenshots
+Build up planning + intial step
+![Planning](./content/Screenshot%202024-12-05%20at%2015.51.01.png)
+
+Content extraction
+![Content Extraction](./content/Screenshot%202024-12-05%20at%2015.51.16.png)
 
 ### Interaction Process
 
