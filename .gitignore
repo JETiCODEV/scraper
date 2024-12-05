@@ -1,0 +1,7 @@
+**/.venv
+**/.env.local
+**/data/**
+**/output/**
+**/temp/**
+**/.cache/**
+**/__pycache__/**
